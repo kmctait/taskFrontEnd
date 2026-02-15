@@ -10,6 +10,11 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * RestTemplate used in order to call the REST API
+ * and effectively 'exchange' information between frontend and backend
+ */
+
 @Service
 public class TaskApiClient {
 
@@ -18,6 +23,9 @@ public class TaskApiClient {
 
     public List<TaskDTO> getAllTasks() {
         TaskDTO[] tasks = restTemplate.getForObject(API_URL + "/get-all-tasks", TaskDTO[].class);
+        if (tasks == null) {
+            return List.of();
+        }
         return Arrays.asList(tasks);
     }
 
@@ -39,7 +47,6 @@ public class TaskApiClient {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        // Wrap the status in a JSON object that matches the backend UpdateStatusRequest
         String jsonBody = "{ \"status\": \"" + status + "\" }";
 
         HttpEntity<String> request = new HttpEntity<>(jsonBody, headers);

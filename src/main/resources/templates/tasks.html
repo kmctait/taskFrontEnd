@@ -68,7 +68,7 @@
         <td th:text="${task.title}"></td>
         <td th:text="${task.description}"></td>
 
-        <!-- Status dropdown -->
+        <!-- Status  -->
         <td>
             <form th:action="@{'/tasks/update-status/' + ${task.id}}" method="post">
                 <select name="status">
@@ -81,7 +81,7 @@
             </form>
         </td>
 
-        <!-- Delete button -->
+        <!-- Delete -->
         <td>
             <form th:action="@{'/tasks/delete/' + ${task.id}}" method="post">
                 <button type="submit">Delete</button>

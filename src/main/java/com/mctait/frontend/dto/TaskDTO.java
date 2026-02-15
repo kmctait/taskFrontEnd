@@ -6,6 +6,11 @@ import jakarta.validation.constraints.Size;
 
 import java.util.Date;
 
+/**
+ * Data Transfer object for exchanged JSON with REST API
+ * Some validation provided in form of Spring annotations
+ */
+
 public class TaskDTO {
 
     private Long id;
