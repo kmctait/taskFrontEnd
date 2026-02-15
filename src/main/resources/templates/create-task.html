@@ -2,34 +2,98 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Create Task</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 500px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        form div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="date"], textarea, select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a.button-link {
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 <h1>Create Task</h1>
 
 <form th:action="@{/tasks/create}" method="post" th:object="${task}">
     <div>
-        Title: <input type="text" th:field="*{title}" />
-        <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        <label for="title">Title:</label>
+        <input type="text" th:field="*{title}" id="title" placeholder="Enter task title"/>
+        <div class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
     </div>
 
     <div>
-        Description: <textarea th:field="*{description}" rows="3" cols="30"></textarea>
-        <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+        <label for="description">Description:</label>
+        <textarea th:field="*{description}" id="description" placeholder="Enter detailed description"></textarea>
+        <div class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
     </div>
 
     <div>
-        Status: <input type="text" th:field="*{status}" />
-        <div th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></div>
+        <label for="status">Status:</label>
+        <select th:field="*{status}" id="status">
+            <option value="" disabled selected>Select status</option>
+            <option value="To Do" th:selected="${task.status == 'To Do'}">To Do</option>
+            <option value="In Progress" th:selected="${task.status == 'In Progress'}">In Progress</option>
+            <option value="Completed" th:selected="${task.status == 'Completed'}">Completed</option>
+            <option value="Cancelled" th:selected="${task.status == 'Cancelled'}">Cancelled</option>
+        </select>
+        <div class="error" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></div>
     </div>
 
     <div>
-        Due Date: <input type="date" th:field="*{dueDate}" />
-        <div th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></div>
+        <label for="dueDate">Due Date:</label>
+        <input type="date" th:field="*{dueDate}" id="dueDate"/>
+        <div class="error" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></div>
     </div>
 
     <button type="submit">Create Task</button>
 </form>
 
-<a href="/tasks">Back to all tasks</a>
+<p>
+    <a href="/tasks" class="button-link">
+        <button type="button">Back to Task List</button>
+    </a>
+</p>
 </body>
 </html>
